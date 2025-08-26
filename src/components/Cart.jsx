@@ -1,10 +1,11 @@
+// Cart.jsx
 import data from "../assets/data";
 import { useCart } from "../context/cartContext";
 import { useMenu } from "../context/menuContext";
 
 function Cart() {
-  const {cart} = useCart()
-  const {menu} = useMenu();
+  const { cart } = useCart();
+  const { menu } = useMenu();
   if (!menu)
     return (
       <div style={{ textAlign: "center", margin: "80px" }}>
@@ -17,9 +18,9 @@ function Cart() {
       <h2>장바구니</h2>
       <ul className="cart">
         {cart?.length ? (
-          cart.map((el) => (
+          cart.map((el, index) => (
             <CartItem
-              key={el.id}
+              key={`${el.id}-${index}`}
               item={allMenus.find((menu) => menu.id === el.id)}
               options={el.options}
               quantity={el.quantity}
@@ -34,7 +35,7 @@ function Cart() {
 }
 
 function CartItem({ item, options, quantity }) {
-  const {removeFromCart} = useCart()
+  const { removeFromCart } = useCart();
   return (
     <li className="cart-item">
       <div className="cart-item-info">
@@ -42,7 +43,7 @@ function CartItem({ item, options, quantity }) {
         <div>{item.name}</div>
       </div>
       <div className="cart-item-option">
-        {Object.keys(options).map((el) => (
+        {Object.keys(options).map((el) =>(
           <div key={el}>
             {el} : {data.options[el][options[el]]}
           </div>
@@ -52,7 +53,7 @@ function CartItem({ item, options, quantity }) {
       <button
         className="cart-item-delete"
         onClick={() => {
-          removeFromCart(item.id)
+          removeFromCart(item.id);
         }}
       >
         삭제

@@ -1,15 +1,19 @@
 import { createContext, useContext } from "react";
 import data from "../assets/data";
 
-const menuContext = createContext()
+const MenuContext = createContext()
 
 export const MenuProvider = ({children})=>{
     return(
-        <menuContext.Provider value={{menu:data.menu}}>
+        <MenuContext.Provider value={{menu:data.menu}}>
             {children}
-        </menuContext.Provider>
+        </MenuContext.Provider>
     )
 }
 export const useMenu = ()=>{
-    return useContext(menuContext)
+    const context = useContext(MenuContext);
+    if(!context){
+        throw new Error("useMenu훅은 MenuProvider 안에서만 사용할 수 있습니다!")
+    }
+    return context
 }
